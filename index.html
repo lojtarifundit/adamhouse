@@ -206,12 +206,10 @@
     position:absolute;inset:0;
     display:flex;flex-direction:column;justify-content:space-between;
     padding:22px;
-    opacity:0;transition:opacity .4s ease;
+    opacity:1;
   }
-  .port-card:hover .port-overlay{opacity:1;}
   .bracket{position:absolute;width:22px;height:22px;border-color:var(--ivory);
-    opacity:0;transition:opacity .4s ease, transform .4s ease;}
-  .port-card:hover .bracket{opacity:1;}
+    opacity:1;}
   .bracket.tl{top:16px;left:16px;border-top:1.5px solid;border-left:1.5px solid;transform:translate(6px,6px);}
   .bracket.tr{top:16px;right:16px;border-top:1.5px solid;border-right:1.5px solid;transform:translate(-6px,6px);}
   .bracket.bl{bottom:16px;left:16px;border-bottom:1.5px solid;border-left:1.5px solid;transform:translate(6px,-6px);}
@@ -493,40 +491,72 @@
     </div>
     <div class="portfolio-grid">
 
-     <div class="port-card horizontal" id="hillsideCard" onclick="playInline(this)">
-        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1600&auto=format&fit=crop" alt="Modern hillside estate">
+     <div class="port-card horizontal" onclick="playInline(this, 'https://pub-4763701b27b74954950e3ea987454171.r2.dev/MAR_Development.mp4')">
+        <img src="https://images.unsplash.com/photo-1686968719603-61b698e28e7b?q=80&w=1600&auto=format&fit=crop" alt="Aerial construction site, early phase">
         <div class="bracket tl"></div><div class="bracket tr"></div><div class="bracket bl"></div><div class="bracket br"></div>
         <div class="port-overlay">
           <div class="port-top-row">
             <span class="port-tc"><span class="dot"></span>00:01:24:07</span>
-            <span class="port-tc">4K · GIMBAL</span>
+            <span class="port-tc">4K · AERIAL</span>
           </div>
           <div class="play-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
           <div class="port-bottom">
-            <span class="tag">Twilight Film</span>
-            <h4>Hillside Modern - Malibu, CA</h4>
+            <span class="tag">Construction Progress</span>
+            <h4>4K Aerial - MAR Development Residence - Construction Early Phase</h4>
           </div>
         </div>
       </div>
 
-      <div class="port-card horizontal">
-        <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200&auto=format&fit=crop" alt="Downtown loft">
+      <div class="port-card horizontal" onclick="playInline(this, 'https://pub-4763701b27b74954950e3ea987454171.r2.dev/Mar_Development_V1.1.mp4')">
+        <img src="https://images.unsplash.com/photo-1686968719603-61b698e28e7b?q=80&w=1600&auto=format&fit=crop" alt="Aerial construction site, phase two">
         <div class="bracket tl"></div><div class="bracket tr"></div><div class="bracket bl"></div><div class="bracket br"></div>
         <div class="port-overlay">
           <div class="port-top-row">
             <span class="port-tc"><span class="dot"></span>00:00:52:14</span>
-            <span class="port-tc">4K · WALKTHROUGH</span>
+            <span class="port-tc">4K · AERIAL</span>
           </div>
           <div class="play-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
           <div class="port-bottom">
-            <span class="tag">Walkthrough</span>
-            <h4>The Ludlow Loft - Austin, TX</h4>
+            <span class="tag">Construction Progress</span>
+            <h4>4K Aerial - MAR Development Residence - Phase II of Construction</h4>
           </div>
         </div>
       </div>
 
-      <div class="port-card vertical">
-        <img src="https://images.unsplash.com/photo-1613977257363-707ba9348227?q=80&w=1200&auto=format&fit=crop" alt="Coastal estate aerial">
+      <div class="port-card horizontal" onclick="playInline(this, 'https://pub-4763701b27b74954950e3ea987454171.r2.dev/GeoSensors%20%5Bmlair.pro_V1.4%5D.mp4')">
+        <img src="https://images.unsplash.com/photo-1686968719603-61b698e28e7b?q=80&w=1600&auto=format&fit=crop" alt="Aerial sensor modelling site">
+        <div class="bracket tl"></div><div class="bracket tr"></div><div class="bracket bl"></div><div class="bracket br"></div>
+        <div class="port-overlay">
+          <div class="port-top-row">
+            <span class="port-tc"><span class="dot"></span>00:01:10:02</span>
+            <span class="port-tc">4K · MODELLING</span>
+          </div>
+          <div class="play-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+          <div class="port-bottom">
+            <span class="tag">Aerial &amp; Modelling</span>
+            <h4>4K Aerial &amp; Modelling - GeoSensors / GeoMatrix - Grader 3D Sensor Modelling</h4>
+          </div>
+        </div>
+      </div>
+
+      <div class="port-card horizontal" onclick="playInline(this, 'https://pub-4763701b27b74954950e3ea987454171.r2.dev/4K%20UltraHD.mp4')">
+        <img src="https://images.unsplash.com/photo-1635821620693-b6863c79db72?q=80&w=1600&auto=format&fit=crop" alt="EPOKA University aerial campus view">
+        <div class="bracket tl"></div><div class="bracket tr"></div><div class="bracket bl"></div><div class="bracket br"></div>
+        <div class="port-overlay">
+          <div class="port-top-row">
+            <span class="port-tc"><span class="dot"></span>00:01:38:19</span>
+            <span class="port-tc">4K · AERIAL/GIMBAL</span>
+          </div>
+          <div class="play-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+          <div class="port-bottom">
+            <span class="tag">Commercial</span>
+            <h4>4K Aerial &amp; Gimbal - EPOKA University - Commercial Video - Part I</h4>
+          </div>
+        </div>
+      </div>
+
+      <div class="port-card vertical" onclick="playInline(this, 'https://pub-4763701b27b74954950e3ea987454171.r2.dev/Epoka_got_Solar.mp4')">
+        <img src="https://images.unsplash.com/photo-1635821620693-b6863c79db72?q=80&w=1200&auto=format&fit=crop" alt="EPOKA University aerial campus view">
         <div class="bracket tl"></div><div class="bracket tr"></div><div class="bracket bl"></div><div class="bracket br"></div>
         <div class="port-overlay">
           <div class="port-top-row">
@@ -535,8 +565,8 @@
           </div>
           <div class="play-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
           <div class="port-bottom">
-            <span class="tag">Aerial Coverage</span>
-            <h4>Shoreline Estate - Newport, RI</h4>
+            <span class="tag">Speed Ramp Commercial</span>
+            <h4>4K Aerial - EPOKA University - Solar Speed Ramp Commercial</h4>
           </div>
         </div>
       </div>
@@ -675,9 +705,7 @@
 </footer>
 
 <script>
-  const R2_VIDEO_SRC = "https://pub-4763701b27b74954950e3ea987454171.r2.dev/4K%20UltraHD.mp4";
-
-  function playInline(card){
+  function playInline(card, videoUrl){
     if (card.classList.contains('playing')) return;
     card.classList.add('playing');
     card.removeAttribute('onclick');
@@ -686,9 +714,8 @@
     wrapper.className = 'card-video-frame';
 
     const video = document.createElement('video');
-    video.src = R2_VIDEO_SRC;
+    video.src = videoUrl;
     video.autoplay = true;
-    video.loop = true;
     video.controls = true;
     video.setAttribute('playsinline', '');
     video.disablePictureInPicture = true;
@@ -731,7 +758,7 @@
   Promise.race([fontsReady, safetyTimeout]).then(startIntro);
   setTimeout(hidePreloader, 4000);
 
-  const rotatingWords = ['Luxury', 'Building', 'Vibe'];
+  const rotatingWords = ['Luxury', 'Progress', 'Vibe'];
   let rotatingIndex = 0;
   const rotatingEl = document.getElementById('rotatingWord');
   const restTextEl = document.getElementById('restText');

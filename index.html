@@ -93,14 +93,22 @@
     position:relative;min-height:100vh;
     display:flex;flex-direction:column;justify-content:flex-end;
     padding-bottom:0;
+    overflow:hidden;
   }
   .hero-bg{
     position:absolute;inset:0;z-index:-2;
-    background-image:
-      linear-gradient(180deg, rgba(10,10,11,0.55) 0%, rgba(10,10,11,0.7) 55%, rgba(10,10,11,0.97) 100%),
-      url('https://www.forbesglobalproperties.com/cdn-cgi/image/width=2400,height=1350,fit=scale-down,quality=60,gravity=auto,sharpen=1,metadata=none,format=auto/wp-content/uploads/2025/05/005-5361-30-Primosten-Luxury-villa-with-pool-and-a-sea-view-for-sale.jpg');
-    background-size:cover;background-position:center;
+    background:#0a0a0b;
+  }
+  .hero-bg video{
+    position:absolute;inset:0;
+    width:100%;height:100%;
+    object-fit:cover;
     filter:saturate(0.9) contrast(1.05);
+  }
+  .hero-bg::after{
+    content:"";
+    position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(10,10,11,0.55) 0%, rgba(10,10,11,0.7) 55%, rgba(10,10,11,0.97) 100%);
   }
   .hero-grain{
     position:absolute;inset:0;z-index:-1;
@@ -459,7 +467,12 @@
 </header>
 
 <section class="hero">
-  <div class="hero-bg"></div>
+  <div class="hero-bg">
+    <video autoplay muted loop playsinline preload="auto" poster="https://www.forbesglobalproperties.com/cdn-cgi/image/width=2400,height=1350,fit=scale-down,quality=60,gravity=auto,sharpen=1,metadata=none,format=auto/wp-content/uploads/2025/05/005-5361-30-Primosten-Luxury-villa-with-pool-and-a-sea-view-for-sale.jpg">
+      <source src="https://pub-4763701b27b74954950e3ea987454171.r2.dev/GN_Tikos.mov" type="video/quicktime">
+      <source src="https://pub-4763701b27b74954950e3ea987454171.r2.dev/GN_Tikos.mov" type="video/mp4">
+    </video>
+  </div>
   <div class="hero-grain"></div>
   <div class="rec-badge"><span class="dot"></span>REC · 4K/60</div>
   <div class="wrap hero-inner">

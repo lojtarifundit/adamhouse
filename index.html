@@ -382,6 +382,23 @@
     object-fit:cover;
     display:block;
   }
+  .card-video-spinner{
+    position:absolute;inset:0;z-index:3;
+    display:flex;align-items:center;justify-content:center;
+    pointer-events:none;
+    opacity:0;
+    transition:opacity .25s ease;
+  }
+  .card-video-spinner.show{opacity:1;}
+  .card-video-spinner::after{
+    content:"";
+    width:34px;height:34px;
+    border:2px solid rgba(243,239,231,0.25);
+    border-top-color:var(--brass);
+    border-radius:50%;
+    animation:cardSpin .8s linear infinite;
+  }
+  @keyframes cardSpin{to{transform:rotate(360deg);}}
 
   @media (max-width:980px){
     .wrap{padding:0 24px;}
@@ -713,17 +730,31 @@
     const wrapper = document.createElement('div');
     wrapper.className = 'card-video-frame';
 
+    const spinner = document.createElement('div');
+    spinner.className = 'card-video-spinner';
+
     const video = document.createElement('video');
     video.src = videoUrl;
     video.autoplay = true;
     video.controls = true;
+    video.preload = 'auto';
     video.setAttribute('playsinline', '');
     video.disablePictureInPicture = true;
     video.controlsList = 'nodownload noremoteplayback nofullscreen';
 
+    video.addEventListener('waiting', () => spinner.classList.add('show'));
+    video.addEventListener('playing', () => spinner.classList.remove('show'));
+    video.addEventListener('canplay', () => spinner.classList.remove('show'));
+
     wrapper.appendChild(video);
+    wrapper.appendChild(spinner);
     card.appendChild(wrapper);
-    video.play().catch(() => {});
+
+    video.play().catch(() => {
+      // Browser rejected unmuted autoplay - fall back to muted so playback still starts.
+      video.muted = true;
+      video.play().catch(() => {});
+    });
   }
 </script>
 

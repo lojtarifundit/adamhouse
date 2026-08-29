@@ -175,16 +175,35 @@
   .services{background:var(--bg-raise);border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);}
   .service-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--line);}
   .service{
-    padding:44px 32px 44px 0;
+    padding:48px 34px 48px 30px;
     border-right:1px solid var(--line-soft);
     position:relative;
+    overflow:hidden;
+    transition:background .4s ease, transform .4s ease;
   }
   .service:last-child{border-right:none;}
+  .service::before{
+    content:"";
+    position:absolute;left:0;bottom:0;width:0;height:2px;
+    background:var(--brass);
+    box-shadow:0 0 10px rgba(200,155,92,0.6);
+    transition:width .45s cubic-bezier(.16,1,.3,1);
+  }
+  .service:hover{background:rgba(200,155,92,0.045);transform:translateY(-6px);}
+  .service:hover::before{width:100%;}
+  .service-icon{
+    width:36px;height:36px;
+    margin-bottom:26px;
+    color:var(--brass);
+    opacity:0.9;
+  }
+  .service-icon svg{width:100%;height:100%;}
   .service .num{
     font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--brass-dim);
-    margin-bottom:28px;display:block;
+    margin-bottom:14px;display:block;
+    letter-spacing:0.1em;
   }
-  .service h3{font-size:23px;margin-bottom:14px;font-weight:400;}
+  .service h3{font-size:24px;margin-bottom:14px;font-weight:400;}
   .service p{font-size:14.5px;color:var(--muted);line-height:1.65;}
 
   /* ---------- PORTFOLIO ---------- */
@@ -447,25 +466,6 @@
     <div class="eyebrow"><span class="dot"></span>AERIAL VIDEOGRAPHY · NATIONWIDE</div>
     <h1><span id="rotatingWord" class="rotating-word">Luxury</span> <span id="restText" class="rest-fade">inside <em>frames</em></span><span id="tailPad"></span></h1>
     <p class="hero-desc">Every property deserves a story, not just a video.</p>
-
-    <div class="meta-row">
-      <div class="meta-item">
-        <div class="meta-label">VFX &amp; SFX</div>
-        <div class="meta-value"><span>ON</span></div>
-      </div>
-      <div class="meta-item">
-        <div class="meta-label">Markets Served</div>
-        <div class="meta-value">Overall</div>
-      </div>
-      <div class="meta-item">
-        <div class="meta-label">Avg. Turnaround</div>
-        <div class="meta-value"><span>48</span> hrs</div>
-      </div>
-      <div class="meta-item">
-        <div class="meta-label">Delivery Format</div>
-        <div class="meta-value">4K HDR</div>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -478,21 +478,25 @@
     <div class="service-grid">
       <div class="service">
         <span class="num">01</span>
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.6"/><path d="M4.5 7.5 12 12l7.5-4.5M4.5 16.5 12 12l7.5 4.5M4.5 7.5v9M19.5 7.5v9M4.5 7.5 12 3l7.5 4.5M4.5 16.5 12 21l7.5-4.5"/></svg></div>
         <h3>Drone Videography</h3>
         <p>Cinematic and FPV drone work combined to capture the scale of a property from height, then carried indoors to give every room the same sense of movement.</p>
       </div>
       <div class="service">
         <span class="num">02</span>
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="13" height="12" rx="1.5"/><path d="m21 8.5-5 3.5 5 3.5v-7Z"/><path d="M7 6V4.5M12 6V4.5"/></svg></div>
         <h3>Cinematic Editing</h3>
         <p>Modern, retention-focused edits paired with full color grading, cut to hold attention from the first second to the last.</p>
       </div>
       <div class="service">
         <span class="num">03</span>
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 7.5v9L12 21l8-4.5v-9L12 3Z"/><path d="M4 7.5 12 12l8-4.5M12 12v9"/></svg></div>
         <h3>3D Modeling</h3>
         <p>Backed by an architecture and engineering foundation, we integrate 3D models into commercial films to visualize spaces before, or beyond, what the camera can show.</p>
       </div>
       <div class="service">
         <span class="num">04</span>
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="12" r="2.3"/><circle cx="17.5" cy="6" r="2.3"/><circle cx="17.5" cy="18" r="2.3"/><path d="m7.6 10.8 7.8-3.7M7.6 13.2l7.8 3.7"/></svg></div>
         <h3>Social Media</h3>
         <p>Ongoing content scheduling and strategy to help agencies build a consistent social presence around every listing.</p>
       </div>
@@ -525,7 +529,7 @@
       </div>
 
       <div class="port-card horizontal" onclick="playInline(this, 'https://pub-4763701b27b74954950e3ea987454171.r2.dev/Mar_Development_V1.1.mp4')">
-        <img src="https://images.unsplash.com/photo-1686968719603-61b698e28e7b?q=80&w=1600&auto=format&fit=crop" alt="Aerial construction site, phase two">
+        <img src="https://images.unsplash.com/photo-1681616670729-283ba2aa0722?q=80&w=1600&auto=format&fit=crop" alt="Aerial construction site, phase two">
         <div class="bracket tl"></div><div class="bracket tr"></div><div class="bracket bl"></div><div class="bracket br"></div>
         <div class="port-overlay">
           <div class="port-top-row">
@@ -541,7 +545,7 @@
       </div>
 
       <div class="port-card horizontal" onclick="playInline(this, 'https://pub-4763701b27b74954950e3ea987454171.r2.dev/GeoSensors%20%5Bmlair.pro_V1.4%5D.mp4')">
-        <img src="https://images.unsplash.com/photo-1686968719603-61b698e28e7b?q=80&w=1600&auto=format&fit=crop" alt="Aerial sensor modelling site">
+        <img src="https://images.unsplash.com/photo-1686358244616-aed9e9a1d827?q=80&w=1600&auto=format&fit=crop" alt="Aerial sensor modelling site">
         <div class="bracket tl"></div><div class="bracket tr"></div><div class="bracket bl"></div><div class="bracket br"></div>
         <div class="port-overlay">
           <div class="port-top-row">
@@ -573,7 +577,7 @@
       </div>
 
       <div class="port-card vertical" onclick="playInline(this, 'https://pub-4763701b27b74954950e3ea987454171.r2.dev/Epoka_got_Solar.mp4')">
-        <img src="https://images.unsplash.com/photo-1635821620693-b6863c79db72?q=80&w=1200&auto=format&fit=crop" alt="EPOKA University aerial campus view">
+        <img src="https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?q=80&w=1200&auto=format&fit=crop" alt="Aerial view of solar panels">
         <div class="bracket tl"></div><div class="bracket tr"></div><div class="bracket bl"></div><div class="bracket br"></div>
         <div class="port-overlay">
           <div class="port-top-row">
@@ -589,7 +593,7 @@
       </div>
 
       <div class="port-card vertical" onclick="playInline(this, 'https://pub-4763701b27b74954950e3ea987454171.r2.dev/Lambo_2.mp4')">
-        <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1200&auto=format&fit=crop" alt="Minimal courtyard home">
+        <img src="https://images.unsplash.com/photo-1577975396515-a6a5271697f3?q=80&w=1200&auto=format&fit=crop" alt="Black supercar">
         <div class="bracket tl"></div><div class="bracket tr"></div><div class="bracket bl"></div><div class="bracket br"></div>
         <div class="port-overlay">
           <div class="port-top-row">
@@ -598,8 +602,8 @@
           </div>
           <div class="play-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
           <div class="port-bottom">
-            <span class="tag">Cinematic Walkthrough</span>
-            <h4>Courtyard House - Scottsdale, AZ</h4>
+            <span class="tag">Automotive Reel</span>
+            <h4>4K Cinematic - Lamborghini Showcase</h4>
           </div>
         </div>
       </div>

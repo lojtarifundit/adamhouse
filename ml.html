@@ -307,6 +307,7 @@
       background: rgba(255,255,255,0.1);
       border-radius: 2px;
       position: relative;
+      cursor: pointer;
     }
 
     .volume-level {
@@ -314,62 +315,7 @@
       height: 100%;
       background: var(--bright-red);
       border-radius: 2px;
-    }
-
-    /* 3D Object Visual */
-    .object-3d {
-      position: absolute;
-      right: 12%;
-      bottom: -15%;
-      width: 480px;
-      height: 480px;
-      background: linear-gradient(135deg, #ffffff 0%, #b0b0b0 100%);
-      border-radius: 40px;
-      transform: rotate(-18deg) rotateX(25deg);
-      box-shadow: -30px 30px 60px rgba(0,0,0,0.9);
-      z-index: 5;
-      transition: transform 0.5s ease;
-    }
-
-    /* Bottom Dock Bar */
-    .bottom-dock {
-      position: absolute;
-      bottom: 2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--panel-bg);
-      border: 1px solid var(--panel-border);
-      padding: 0.5rem 1rem;
-      border-radius: 40px;
-      display: flex;
-      align-items: center;
-      gap: 1.2rem;
-      backdrop-filter: blur(20px);
-      z-index: 20;
-    }
-
-    .dock-item {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #8a7c80;
-      cursor: pointer;
-      font-size: 1rem;
-      transition: all 0.3s ease;
-    }
-
-    .dock-item:hover {
-      color: #ffffff;
-      background: rgba(255,255,255,0.05);
-    }
-
-    .dock-item.active {
-      background: #ffffff;
-      color: #000000;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+      transition: width 0.1s linear;
     }
 
     /* Side Awards Badge */
@@ -538,7 +484,7 @@
   <div class="top-left-status"></div>
 
   <div class="hero-container">
-    <div class="sub-url">www.marsedleti.com</div>
+    <div class="sub-url">PhD | Engineer</div>
     <h1 class="main-title">
       <span class="first-line">Marsed</span>
       <span class="second-line">Leti</span>
@@ -548,7 +494,7 @@
     </p>
     <div class="hero-actions">
       <button class="btn-icon" id="btn-linkedin">in</button>
-      <button class="btn-studio" id="btn-studio">The Studio</button>
+      <button class="btn-studio" id="btn-studio">Enter</button>
     </div>
   </div>
 
@@ -558,10 +504,6 @@
     <div class="control-row">
       <span>Theme</span>
       <span>🌙</span>
-    </div>
-    <div class="control-row">
-      <span>3D Animations</span>
-      <div class="switch active" id="toggle-3d"></div>
     </div>
     <div class="control-row">
       <span>Full Screen</span>
@@ -576,24 +518,14 @@
     <div class="music-player">
       <div class="music-label">MUSIC</div>
       <div class="player-controls">
-        <span class="ctrl-btn">⏮</span>
+        <span class="ctrl-btn" id="music-prev-btn">⏮</span>
         <div class="play-btn" id="music-play-btn">▶</div>
-        <span class="ctrl-btn">⏭</span>
+        <span class="ctrl-btn" id="music-next-btn">⏭</span>
       </div>
-      <div class="volume-container">
-        <div class="volume-level"></div>
+      <div class="volume-container" id="volume-bar">
+        <div class="volume-level" id="volume-level"></div>
       </div>
     </div>
-  </div>
-
-  <div class="object-3d" id="object-3d"></div>
-
-  <div class="bottom-dock">
-    <div class="dock-item active">⌘</div>
-    <div class="dock-item">⊞</div>
-    <div class="dock-item">🎨</div>
-    <div class="dock-item">☝</div>
-    <div class="dock-item">💬</div>
   </div>
 
   <div class="awards-badge">
@@ -665,18 +597,28 @@
       reset() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 120 + 80;
-        this.vx = (Math.random() - 0.5) * 0.4;
-        this.vy = (Math.random() - 0.5) * 0.4;
-        this.alpha = Math.random() * 0.35 + 0.1;
+        this.baseSize = Math.random() * 140 + 90;
+        this.size = this.baseSize;
+        // Velocity slightly faster than original (2.2 max speed vs 1.6)
+        this.vx = (Math.random() - 0.5) * 2.2;
+        this.vy = (Math.random() - 0.5) * 2.2;
+        this.baseAlpha = Math.random() * 0.35 + 0.15;
+        this.alpha = this.baseAlpha;
+        // Subtle breathing effect
+        this.pulseAngle = Math.random() * Math.PI * 2;
+        this.pulseSpeed = Math.random() * 0.02 + 0.01;
       }
 
       update() {
         this.x += this.vx;
         this.y += this.vy;
 
-        if (this.x < -100 || this.x > canvas.width + 100 || 
-            this.y < -100 || this.y > canvas.height + 100) {
+        // Soft pulsing size change
+        this.pulseAngle += this.pulseSpeed;
+        this.size = this.baseSize + Math.sin(this.pulseAngle) * 20;
+
+        if (this.x < -120 || this.x > canvas.width + 120 || 
+            this.y < -120 || this.y > canvas.height + 120) {
           this.reset();
         }
       }
@@ -684,19 +626,20 @@
       draw() {
         const gradient = ctx.createRadialGradient(
           this.x, this.y, 0,
-          this.x, this.y, this.size
+          this.x, this.y, Math.max(10, this.size)
         );
         gradient.addColorStop(0, `rgba(180, 0, 35, ${this.alpha})`);
         gradient.addColorStop(1, 'rgba(5, 2, 3, 0)');
 
         ctx.fillStyle = gradient;
         ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.arc(this.x, this.y, Math.max(10, this.size), 0, Math.PI * 2);
         ctx.fill();
       }
     }
 
-    const particles = Array.from({ length: 18 }, () => new Particle());
+    // Balanced count of 26 particles
+    const particles = Array.from({ length: 26 }, () => new Particle());
 
     function animate() {
       ctx.fillStyle = '#050203';
@@ -730,57 +673,40 @@
       }
     });
 
-    // --- Ambient Synthesizer Audio ---
-    let audioCtx = null;
-    let isPlaying = false;
-    let mainGain = null;
-
-    function initAudio() {
-      if (audioCtx) return;
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-      mainGain = audioCtx.createGain();
-      mainGain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-      mainGain.connect(audioCtx.destination);
-
-      const osc1 = audioCtx.createOscillator();
-      const osc2 = audioCtx.createOscillator();
-
-      osc1.type = 'sawtooth';
-      osc1.frequency.setValueAtTime(110, audioCtx.currentTime);
-
-      osc2.type = 'sine';
-      osc2.frequency.setValueAtTime(55, audioCtx.currentTime);
-
-      const filter = audioCtx.createBiquadFilter();
-      filter.type = 'lowpass';
-      filter.frequency.setValueAtTime(250, audioCtx.currentTime);
-
-      osc1.connect(filter);
-      osc2.connect(filter);
-      filter.connect(mainGain);
-
-      osc1.start();
-      osc2.start();
-    }
+    // --- Audio Player Setup ---
+    const trackUrl = 'https://cyrillic.digital/music/Cyrillic%20Digital-Tambura%20Rainlight.mp3';
+    const audio = new Audio(trackUrl);
+    audio.loop = true;
+    audio.volume = 0.7;
 
     const playBtn = document.getElementById('music-play-btn');
+    const volumeBar = document.getElementById('volume-bar');
+    const volumeLevel = document.getElementById('volume-level');
+    const prevBtn = document.getElementById('music-prev-btn');
+    const nextBtn = document.getElementById('music-next-btn');
+
     playBtn.addEventListener('click', () => {
-      if (!audioCtx) initAudio();
-
-      if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
-      }
-
-      if (isPlaying) {
-        mainGain.gain.setTargetAtTime(0, audioCtx.currentTime, 0.1);
-        playBtn.textContent = '▶';
-        isPlaying = false;
+      if (audio.paused) {
+        audio.play().then(() => {
+          playBtn.textContent = '⏸';
+        }).catch(err => {
+          console.error("Audio play error:", err);
+        });
       } else {
-        mainGain.gain.setTargetAtTime(0.3, audioCtx.currentTime, 0.1);
-        playBtn.textContent = '⏸';
-        isPlaying = true;
+        audio.pause();
+        playBtn.textContent = '▶';
       }
+    });
+
+    prevBtn.addEventListener('click', () => { audio.currentTime = 0; });
+    nextBtn.addEventListener('click', () => { audio.currentTime = 0; });
+
+    volumeBar.addEventListener('click', (e) => {
+      const rect = volumeBar.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const newVolume = Math.min(Math.max(clickX / rect.width, 0), 1);
+      audio.volume = newVolume;
+      volumeLevel.style.width = `${newVolume * 100}%`;
     });
 
     // --- Control Widget Toggles ---
@@ -789,14 +715,6 @@
     
     settingsToggle.addEventListener('click', () => {
       controlCard.classList.toggle('hidden');
-    });
-
-    const toggle3D = document.getElementById('toggle-3d');
-    const object3D = document.getElementById('object-3d');
-
-    toggle3D.addEventListener('click', () => {
-      toggle3D.classList.toggle('active');
-      object3D.style.display = toggle3D.classList.contains('active') ? 'block' : 'none';
     });
 
     const toggleFullscreen = document.getElementById('toggle-fullscreen');

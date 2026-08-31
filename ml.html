@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marsed Leti - Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #050203;
+      --accent-red: #8b001a;
+      --bright-red: #e60033;
+      --panel-bg: rgba(18, 8, 12, 0.85);
+      --panel-border: rgba(255, 255, 255, 0.1);
+      --text-muted: #8a7c80;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+      user-select: none;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: #ffffff;
+      min-height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Animated Canvas Background */
+    #bg-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Top Left Status Light */
+    .top-left-status {
+      position: absolute;
+      top: 2rem;
+      left: 2.5rem;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--bright-red) 30%, rgba(230, 0, 51, 0.2) 100%);
+      box-shadow: 0 0 15px var(--bright-red);
+      z-index: 10;
+    }
+
+    /* Hero Section */
+    .hero-container {
+      position: absolute;
+      top: 28%;
+      left: 8%;
+      z-index: 10;
+      max-width: 500px;
+    }
+
+    .sub-url {
+      font-size: 0.75rem;
+      letter-spacing: 0.35em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .main-title {
+      font-size: 5.5rem;
+      font-weight: 900;
+      line-height: 0.85;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+    }
+
+    .main-title .first-line {
+      color: #ffffff;
+      display: block;
+    }
+
+    .main-title .second-line {
+      color: rgba(180, 20, 40, 0.75);
+      display: block;
+    }
+
+    .hero-desc {
+      margin-top: 2rem;
+      font-size: 0.95rem;
+      color: #b0a3a6;
+      line-height: 1.5;
+      font-weight: 300;
+      max-width: 380px;
+    }
+
+    /* Action Buttons */
+    .hero-actions {
+      margin-top: 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .btn-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(20, 10, 15, 0.6);
+      border: 1px solid var(--panel-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .btn-icon:hover {
+      background: rgba(230, 0, 51, 0.2);
+      border-color: var(--bright-red);
+      transform: scale(1.05);
+    }
+
+    .btn-studio {
+      padding: 0.85rem 2rem;
+      border-radius: 30px;
+      background: rgba(40, 10, 15, 0.8);
+      border: 1px solid rgba(230, 0, 51, 0.4);
+      box-shadow: 0 0 15px rgba(230, 0, 51, 0.25);
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 700;
+      backdrop-filter: blur(10px);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-studio:hover {
+      background: var(--bright-red);
+      box-shadow: 0 0 25px rgba(230, 0, 51, 0.6);
+      transform: translateY(-2px);
+    }
+
+    /* Settings Button */
+    .settings-toggle {
+      position: absolute;
+      top: 2rem;
+      right: 2.5rem;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 20;
+      transition: all 0.3s ease;
+    }
+
+    .settings-toggle:hover {
+      border-color: var(--bright-red);
+      transform: rotate(45deg);
+    }
+
+    /* Floating Controls Card */
+    .control-card {
+      position: absolute;
+      top: 5.5rem;
+      right: 2.5rem;
+      width: 230px;
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: 20px;
+      padding: 1.2rem;
+      backdrop-filter: blur(20px);
+      z-index: 20;
+      font-size: 0.8rem;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .control-card.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-10px);
+    }
+
+    .control-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.9rem;
+      color: #d1c7c9;
+    }
+
+    .switch {
+      width: 36px;
+      height: 20px;
+      background: #2a1a1f;
+      border-radius: 20px;
+      position: relative;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .switch.active {
+      background: var(--bright-red);
+    }
+
+    .switch::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #fff;
+      transition: transform 0.2s ease;
+    }
+
+    .switch.active::after {
+      transform: translateX(16px);
+    }
+
+    .lang-selector {
+      background: rgba(0,0,0,0.4);
+      border: 1px solid var(--panel-border);
+      border-radius: 10px;
+      padding: 0.5rem 0.8rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      cursor: pointer;
+    }
+
+    .music-player {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 0.9rem;
+      text-align: center;
+    }
+
+    .music-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--text-muted);
+      margin-bottom: 0.6rem;
+      font-weight: 700;
+    }
+
+    .player-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.2rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .ctrl-btn {
+      cursor: pointer;
+      color: #8a7c80;
+      transition: color 0.2s;
+    }
+
+    .ctrl-btn:hover {
+      color: #fff;
+    }
+
+    .play-btn {
+      width: 34px;
+      height: 34px;
+      background: var(--bright-red);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #fff;
+      box-shadow: 0 0 10px rgba(230, 0, 51, 0.4);
+      transition: transform 0.2s;
+    }
+
+    .play-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .volume-container {
+      width: 100%;
+      height: 4px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 2px;
+      position: relative;
+    }
+
+    .volume-level {
+      width: 70%;
+      height: 100%;
+      background: var(--bright-red);
+      border-radius: 2px;
+    }
+
+    /* 3D Object Visual */
+    .object-3d {
+      position: absolute;
+      right: 12%;
+      bottom: -15%;
+      width: 480px;
+      height: 480px;
+      background: linear-gradient(135deg, #ffffff 0%, #b0b0b0 100%);
+      border-radius: 40px;
+      transform: rotate(-18deg) rotateX(25deg);
+      box-shadow: -30px 30px 60px rgba(0,0,0,0.9);
+      z-index: 5;
+      transition: transform 0.5s ease;
+    }
+
+    /* Bottom Dock Bar */
+    .bottom-dock {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      padding: 0.5rem 1rem;
+      border-radius: 40px;
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      backdrop-filter: blur(20px);
+      z-index: 20;
+    }
+
+    .dock-item {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #8a7c80;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .dock-item:hover {
+      color: #ffffff;
+      background: rgba(255,255,255,0.05);
+    }
+
+    .dock-item.active {
+      background: #ffffff;
+      color: #000000;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+    }
+
+    /* Side Awards Badge */
+    .awards-badge {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #ffffff;
+      color: #000000;
+      padding: 1.2rem 0.5rem;
+      border-radius: 10px 0 0 10px;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      z-index: 20;
+    }
+
+    /* STUDIO MODAL POPUP */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(15px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .studio-card {
+      background: #0d0b0d;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 28px;
+      padding: 3rem;
+      width: 100%;
+      max-width: 680px;
+      position: relative;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
+      transform: scale(0.95);
+      transition: transform 0.3s ease;
+    }
+
+    .modal-overlay.active .studio-card {
+      transform: scale(1);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1.8rem;
+      right: 2rem;
+      color: #8a7c80;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .modal-close:hover {
+      color: #ffffff;
+    }
+
+    .studio-tag {
+      color: #900c27;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .studio-title {
+      font-size: 3.2rem;
+      font-weight: 800;
+      line-height: 1.05;
+      color: #ffffff;
+      margin-bottom: 2rem;
+      letter-spacing: -0.02em;
+    }
+
+    .approach-box {
+      background: rgba(20, 15, 18, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      padding: 2rem;
+    }
+
+    .approach-tag {
+      color: #900c27;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .approach-desc {
+      color: #e0d8da;
+      font-size: 1.1rem;
+      font-weight: 600;
+      line-height: 1.4;
+      margin-bottom: 2rem;
+    }
+
+    /* Grid of 4 Interactive Cards */
+    .studio-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .grid-btn {
+      background: #080607;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 14px;
+      padding: 1.25rem;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .grid-btn:hover {
+      border-color: rgba(230, 0, 51, 0.4);
+      background: rgba(255, 255, 255, 0.03);
+      transform: translateY(-2px);
+    }
+
+    .btn-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #8a7c80;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+
+    .btn-icon-red {
+      color: #e60033;
+    }
+
+    .btn-label {
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="bg-canvas"></canvas>
+
+  <div class="top-left-status"></div>
+
+  <div class="hero-container">
+    <div class="sub-url">www.marsedleti.com</div>
+    <h1 class="main-title">
+      <span class="first-line">Marsed</span>
+      <span class="second-line">Leti</span>
+    </h1>
+    <p class="hero-desc">
+      Crafting atmosphere-driven indie titles and innovative gameplay mechanics.
+    </p>
+    <div class="hero-actions">
+      <button class="btn-icon" id="btn-linkedin">in</button>
+      <button class="btn-studio" id="btn-studio">The Studio</button>
+    </div>
+  </div>
+
+  <div class="settings-toggle" id="toggle-settings">⚙</div>
+
+  <div class="control-card hidden" id="control-card">
+    <div class="control-row">
+      <span>Theme</span>
+      <span>🌙</span>
+    </div>
+    <div class="control-row">
+      <span>3D Animations</span>
+      <div class="switch active" id="toggle-3d"></div>
+    </div>
+    <div class="control-row">
+      <span>Full Screen</span>
+      <div class="switch" id="toggle-fullscreen"></div>
+    </div>
+    
+    <div class="lang-selector">
+      <span>🌐 English</span>
+      <span>˅</span>
+    </div>
+
+    <div class="music-player">
+      <div class="music-label">MUSIC</div>
+      <div class="player-controls">
+        <span class="ctrl-btn">⏮</span>
+        <div class="play-btn" id="music-play-btn">▶</div>
+        <span class="ctrl-btn">⏭</span>
+      </div>
+      <div class="volume-container">
+        <div class="volume-level"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="object-3d" id="object-3d"></div>
+
+  <div class="bottom-dock">
+    <div class="dock-item active">⌘</div>
+    <div class="dock-item">⊞</div>
+    <div class="dock-item">🎨</div>
+    <div class="dock-item">☝</div>
+    <div class="dock-item">💬</div>
+  </div>
+
+  <div class="awards-badge">
+    W. Nominee
+  </div>
+
+  <div class="modal-overlay" id="studio-modal">
+    <div class="studio-card">
+      <div class="modal-close" id="modal-close">&times;</div>
+      <div class="studio-tag">STUDIO</div>
+      <h2 class="studio-title">Human-centric<br>conscious.</h2>
+
+      <div class="approach-box">
+        <div class="approach-tag">APPROACH</div>
+        <p class="approach-desc">
+          The goal is simple: worlds that feel real, systems that feel fair, and visuals that stay readable.
+        </p>
+
+        <div class="studio-grid">
+          <div class="grid-btn">
+            <div class="btn-header">
+              <span class="btn-icon-red">◎</span> FOCUS
+            </div>
+            <div class="btn-label">Atmosphere and mechanics</div>
+          </div>
+
+          <div class="grid-btn">
+            <div class="btn-header">
+              <span class="btn-icon-red">☍</span> METHOD
+            </div>
+            <div class="btn-label">Prototype to polish</div>
+          </div>
+
+          <div class="grid-btn">
+            <div class="btn-header">
+              <span class="btn-icon-red">📦</span> OUTPUT
+            </div>
+            <div class="btn-label">Original IP + support</div>
+          </div>
+
+          <div class="grid-btn">
+            <div class="btn-header">
+              <span class="btn-icon-red">⭐</span> DEFAULT
+            </div>
+            <div class="btn-label">Premium presentation</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // --- Canvas Animated Background ---
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    class Particle {
+      constructor() {
+        this.reset();
+      }
+
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 120 + 80;
+        this.vx = (Math.random() - 0.5) * 0.4;
+        this.vy = (Math.random() - 0.5) * 0.4;
+        this.alpha = Math.random() * 0.35 + 0.1;
+      }
+
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+
+        if (this.x < -100 || this.x > canvas.width + 100 || 
+            this.y < -100 || this.y > canvas.height + 100) {
+          this.reset();
+        }
+      }
+
+      draw() {
+        const gradient = ctx.createRadialGradient(
+          this.x, this.y, 0,
+          this.x, this.y, this.size
+        );
+        gradient.addColorStop(0, `rgba(180, 0, 35, ${this.alpha})`);
+        gradient.addColorStop(1, 'rgba(5, 2, 3, 0)');
+
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    const particles = Array.from({ length: 18 }, () => new Particle());
+
+    function animate() {
+      ctx.fillStyle = '#050203';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    // --- Studio Modal Popup Toggle ---
+    const btnStudio = document.getElementById('btn-studio');
+    const studioModal = document.getElementById('studio-modal');
+    const modalClose = document.getElementById('modal-close');
+
+    btnStudio.addEventListener('click', () => {
+      studioModal.classList.add('active');
+    });
+
+    modalClose.addEventListener('click', () => {
+      studioModal.classList.remove('active');
+    });
+
+    studioModal.addEventListener('click', (e) => {
+      if (e.target === studioModal) {
+        studioModal.classList.remove('active');
+      }
+    });
+
+    // --- Ambient Synthesizer Audio ---
+    let audioCtx = null;
+    let isPlaying = false;
+    let mainGain = null;
+
+    function initAudio() {
+      if (audioCtx) return;
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+      mainGain = audioCtx.createGain();
+      mainGain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+      mainGain.connect(audioCtx.destination);
+
+      const osc1 = audioCtx.createOscillator();
+      const osc2 = audioCtx.createOscillator();
+
+      osc1.type = 'sawtooth';
+      osc1.frequency.setValueAtTime(110, audioCtx.currentTime);
+
+      osc2.type = 'sine';
+      osc2.frequency.setValueAtTime(55, audioCtx.currentTime);
+
+      const filter = audioCtx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(250, audioCtx.currentTime);
+
+      osc1.connect(filter);
+      osc2.connect(filter);
+      filter.connect(mainGain);
+
+      osc1.start();
+      osc2.start();
+    }
+
+    const playBtn = document.getElementById('music-play-btn');
+    playBtn.addEventListener('click', () => {
+      if (!audioCtx) initAudio();
+
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+
+      if (isPlaying) {
+        mainGain.gain.setTargetAtTime(0, audioCtx.currentTime, 0.1);
+        playBtn.textContent = '▶';
+        isPlaying = false;
+      } else {
+        mainGain.gain.setTargetAtTime(0.3, audioCtx.currentTime, 0.1);
+        playBtn.textContent = '⏸';
+        isPlaying = true;
+      }
+    });
+
+    // --- Control Widget Toggles ---
+    const settingsToggle = document.getElementById('toggle-settings');
+    const controlCard = document.getElementById('control-card');
+    
+    settingsToggle.addEventListener('click', () => {
+      controlCard.classList.toggle('hidden');
+    });
+
+    const toggle3D = document.getElementById('toggle-3d');
+    const object3D = document.getElementById('object-3d');
+
+    toggle3D.addEventListener('click', () => {
+      toggle3D.classList.toggle('active');
+      object3D.style.display = toggle3D.classList.contains('active') ? 'block' : 'none';
+    });
+
+    const toggleFullscreen = document.getElementById('toggle-fullscreen');
+    toggleFullscreen.addEventListener('click', () => {
+      toggleFullscreen.classList.toggle('active');
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen();
+      }
+    });
+  </script>
+</body>
+</html>

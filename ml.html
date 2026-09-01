@@ -178,16 +178,16 @@
       transform: rotate(45deg);
     }
 
-    /* Floating Controls Card */
+    /* Floating Controls Card - Music only */
     .control-card {
       position: absolute;
       top: 5.5rem;
       right: 2.5rem;
-      width: 230px;
+      width: 220px;
       background: var(--panel-bg);
       border: 1px solid var(--panel-border);
       border-radius: 20px;
-      padding: 1.2rem;
+      padding: 1.3rem 1.2rem 1.2rem;
       backdrop-filter: blur(20px);
       z-index: 20;
       font-size: 0.8rem;
@@ -201,59 +201,7 @@
       transform: translateY(-10px);
     }
 
-    .control-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.9rem;
-      color: #d1c7c9;
-    }
-
-    .switch {
-      width: 36px;
-      height: 20px;
-      background: #2a1a1f;
-      border-radius: 20px;
-      position: relative;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    .switch.active {
-      background: var(--bright-red);
-    }
-
-    .switch::after {
-      content: '';
-      position: absolute;
-      top: 2px;
-      left: 2px;
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      background: #fff;
-      transition: transform 0.2s ease;
-    }
-
-    .switch.active::after {
-      transform: translateX(16px);
-    }
-
-    .lang-selector {
-      background: rgba(0,0,0,0.4);
-      border: 1px solid var(--panel-border);
-      border-radius: 10px;
-      padding: 0.5rem 0.8rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1rem;
-      cursor: pointer;
-    }
-
     .music-player {
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      padding-top: 0.9rem;
       text-align: center;
     }
 
@@ -261,7 +209,7 @@
       font-size: 0.65rem;
       letter-spacing: 0.15em;
       color: var(--text-muted);
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.9rem;
       font-weight: 700;
     }
 
@@ -269,14 +217,18 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 1.2rem;
-      margin-bottom: 0.8rem;
+      gap: 1.3rem;
+      margin-bottom: 1.1rem;
     }
 
     .ctrl-btn {
       cursor: pointer;
       color: #8a7c80;
       transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 0;
     }
 
     .ctrl-btn:hover {
@@ -284,17 +236,26 @@
     }
 
     .play-btn {
-      width: 34px;
-      height: 34px;
-      background: var(--bright-red);
+      width: 36px;
+      height: 36px;
+      background: #ffffff;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      color: #fff;
-      box-shadow: 0 0 10px rgba(230, 0, 51, 0.4);
+      color: #0d0b0d;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.35);
       transition: transform 0.2s;
+      line-height: 0;
+    }
+
+    .play-btn svg {
+      display: block;
+    }
+
+    .play-btn .icon-play {
+      margin-left: 2px; /* optical centering for triangle glyph */
     }
 
     .play-btn:hover {
@@ -304,10 +265,11 @@
     .volume-container {
       width: 100%;
       height: 4px;
-      background: rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.12);
       border-radius: 2px;
       position: relative;
       cursor: pointer;
+      touch-action: none;
     }
 
     .volume-level {
@@ -315,15 +277,33 @@
       height: 100%;
       background: var(--bright-red);
       border-radius: 2px;
-      transition: width 0.1s linear;
+      position: relative;
+    }
+
+    .volume-thumb {
+      position: absolute;
+      right: -6px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #ffffff;
+      box-shadow: 0 0 6px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(230, 0, 51, 0.5);
+      cursor: grab;
+    }
+
+    .volume-thumb:active {
+      cursor: grabbing;
     }
 
     /* STUDIO MODAL POPUP */
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.75);
-      backdrop-filter: blur(15px);
+      background: rgba(5, 2, 3, 0.35);
+      backdrop-filter: blur(30px) saturate(160%);
+      -webkit-backdrop-filter: blur(30px) saturate(160%);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -341,10 +321,10 @@
     .studio-card {
       background: #0d0b0d;
       border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 28px;
-      padding: 3rem;
+      border-radius: 24px;
+      padding: 2.4rem;
       width: 100%;
-      max-width: 680px;
+      max-width: 540px;
       position: relative;
       box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
       transform: scale(0.95);
@@ -357,8 +337,8 @@
 
     .modal-close {
       position: absolute;
-      top: 1.8rem;
-      right: 2rem;
+      top: 1.5rem;
+      right: 1.7rem;
       color: #8a7c80;
       font-size: 1.5rem;
       cursor: pointer;
@@ -371,75 +351,123 @@
 
     .studio-tag {
       color: #900c27;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 700;
       letter-spacing: 0.25em;
       text-transform: uppercase;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
     }
 
     .studio-title {
-      font-size: 3.2rem;
+      font-size: 1.85rem;
       font-weight: 800;
-      line-height: 1.05;
+      line-height: 1.15;
       color: #ffffff;
-      margin-bottom: 2rem;
-      letter-spacing: -0.02em;
+      margin-bottom: 1.6rem;
+      letter-spacing: -0.01em;
     }
 
     .approach-box {
       background: rgba(20, 15, 18, 0.8);
       border: 1px solid rgba(255, 255, 255, 0.05);
-      border-radius: 20px;
-      padding: 2rem;
+      border-radius: 18px;
+      padding: 1.25rem;
     }
 
     /* Grid of 4 Interactive Cards */
     .studio-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1rem;
+      gap: 0.85rem;
     }
 
     .grid-btn {
-      background: #080607;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      border-radius: 14px;
-      padding: 1.25rem;
+      background: linear-gradient(160deg, #0d0a0b, #070506);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 1.1rem 1.05rem;
       text-align: left;
       cursor: pointer;
       text-decoration: none;
       display: block;
-      transition: all 0.3s ease;
+      transition: all 0.25s ease;
     }
 
     .grid-btn:hover {
-      border-color: rgba(230, 0, 51, 0.4);
-      background: rgba(255, 255, 255, 0.03);
-      transform: translateY(-2px);
+      border-color: rgba(230, 0, 51, 0.55);
+      background: linear-gradient(160deg, #140a0c, #0a0607);
+      box-shadow: 0 8px 22px rgba(230, 0, 51, 0.15);
+      transform: translateY(-3px);
     }
 
     .btn-header {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      color: #8a7c80;
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      margin-bottom: 0.6rem;
+      gap: 0.55rem;
+      margin-bottom: 0.75rem;
     }
 
-    .btn-icon-red {
-      color: #e60033;
+    .icon-badge {
+      width: 30px;
+      height: 30px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at 30% 30%, rgba(230, 0, 51, 0.28), rgba(0, 0, 0, 0.55));
+      border: 1px solid rgba(230, 0, 51, 0.4);
+      color: var(--bright-red);
+    }
+
+    .btn-kicker {
+      color: #a89599;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
     }
 
     .btn-label {
       color: #ffffff;
-      font-size: 1rem;
+      font-size: 1.05rem;
       font-weight: 700;
       line-height: 1.2;
+    }
+
+    /* Mobile: stack the studio grid into a single column */
+    @media (max-width: 600px) {
+      .studio-card {
+        padding: 2rem 1.4rem;
+        border-radius: 22px;
+        max-width: 92vw;
+        max-height: 85vh;
+        overflow-y: auto;
+      }
+
+      .studio-title {
+        font-size: 1.5rem;
+        margin-bottom: 1.25rem;
+      }
+
+      .approach-box {
+        padding: 1rem;
+        border-radius: 16px;
+      }
+
+      .studio-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+      }
+
+      .grid-btn {
+        padding: 1.05rem 1.15rem;
+        border-radius: 14px;
+      }
+
+      .btn-label {
+        font-size: 1.05rem;
+      }
     }
   </style>
 </head>
@@ -467,29 +495,23 @@
   <div class="settings-toggle" id="toggle-settings">⚙</div>
 
   <div class="control-card hidden" id="control-card">
-    <div class="control-row">
-      <span>Theme</span>
-      <span>🌙</span>
-    </div>
-    <div class="control-row">
-      <span>Full Screen</span>
-      <div class="switch" id="toggle-fullscreen"></div>
-    </div>
-    
-    <div class="lang-selector">
-      <span>🌐 English</span>
-      <span>˅</span>
-    </div>
-
     <div class="music-player">
       <div class="music-label">MUSIC</div>
       <div class="player-controls">
-        <span class="ctrl-btn" id="music-prev-btn">⏮</span>
-        <div class="play-btn" id="music-play-btn">▶</div>
-        <span class="ctrl-btn" id="music-next-btn">⏭</span>
+        <span class="ctrl-btn" id="music-prev-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+        </span>
+        <div class="play-btn" id="music-play-btn">
+          <svg class="icon-play" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        <span class="ctrl-btn" id="music-next-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+        </span>
       </div>
       <div class="volume-container" id="volume-bar">
-        <div class="volume-level" id="volume-level"></div>
+        <div class="volume-level" id="volume-level">
+          <div class="volume-thumb" id="volume-thumb"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -504,28 +526,56 @@
         <div class="studio-grid">
           <a href="https://www.marsedleti.com" target="_blank" rel="noopener noreferrer" class="grid-btn">
             <div class="btn-header">
-              <span class="btn-icon-red">◎</span> Civil Engineering
+              <div class="icon-badge">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 3 2 8l10 5 10-5-10-5Z"/>
+                  <path d="M6 10.5v5c0 1 2.5 2.5 6 2.5s6-1.5 6-2.5v-5"/>
+                  <path d="M22 8v6"/>
+                </svg>
+              </div>
+              <span class="btn-kicker">Civil Engineering</span>
             </div>
             <div class="btn-label">Academic</div>
           </a>
 
           <a href="https://lojtarifundit.github.io/adamhouse/" target="_blank" rel="noopener noreferrer" class="grid-btn">
             <div class="btn-header">
-              <span class="btn-icon-red">☍</span> mlair
+              <div class="icon-badge">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="7" width="13" height="10" rx="2"/>
+                  <path d="M16 10.5 21 7v10l-5-3.5Z"/>
+                </svg>
+              </div>
+              <span class="btn-kicker">mlair</span>
             </div>
             <div class="btn-label">Videography</div>
           </a>
 
           <div class="grid-btn">
             <div class="btn-header">
-              <span class="btn-icon-red">📦</span> LojtariFundit
+              <div class="icon-badge">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="6" width="20" height="12" rx="6"/>
+                  <line x1="6" y1="12" x2="10" y2="12"/>
+                  <line x1="8" y1="10" x2="8" y2="14"/>
+                  <circle cx="15" cy="13" r="0.6" fill="currentColor"/>
+                  <circle cx="18" cy="11" r="0.6" fill="currentColor"/>
+                </svg>
+              </div>
+              <span class="btn-kicker">LojtariFundit</span>
             </div>
             <div class="btn-label">Entertainment</div>
           </div>
 
           <div class="grid-btn">
             <div class="btn-header">
-              <span class="btn-icon-red">⭐</span> Signals
+              <div class="icon-badge">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="6" y="6" width="12" height="12" rx="1.5"/>
+                  <path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"/>
+                </svg>
+              </div>
+              <span class="btn-kicker">Signals</span>
             </div>
             <div class="btn-label">Electronics</div>
           </div>
@@ -662,49 +712,66 @@
     const playBtn = document.getElementById('music-play-btn');
     const volumeBar = document.getElementById('volume-bar');
     const volumeLevel = document.getElementById('volume-level');
+    const volumeThumb = document.getElementById('volume-thumb');
     const prevBtn = document.getElementById('music-prev-btn');
     const nextBtn = document.getElementById('music-next-btn');
+
+    const ICON_PLAY = '<svg class="icon-play" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+    const ICON_PAUSE = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>';
 
     playBtn.addEventListener('click', () => {
       if (audio.paused) {
         audio.play().then(() => {
-          playBtn.textContent = '⏸';
+          playBtn.innerHTML = ICON_PAUSE;
         }).catch(err => {
           console.error("Audio play error:", err);
         });
       } else {
         audio.pause();
-        playBtn.textContent = '▶';
+        playBtn.innerHTML = ICON_PLAY;
       }
     });
 
     prevBtn.addEventListener('click', () => { audio.currentTime = 0; });
     nextBtn.addEventListener('click', () => { audio.currentTime = 0; });
 
-    volumeBar.addEventListener('click', (e) => {
+    // --- Volume slider: click + drag support ---
+    function setVolumeFromClientX(clientX) {
       const rect = volumeBar.getBoundingClientRect();
-      const clickX = e.clientX - rect.left;
-      const newVolume = Math.min(Math.max(clickX / rect.width, 0), 1);
+      const x = clientX - rect.left;
+      const newVolume = Math.min(Math.max(x / rect.width, 0), 1);
       audio.volume = newVolume;
       volumeLevel.style.width = `${newVolume * 100}%`;
+    }
+
+    volumeBar.addEventListener('click', (e) => {
+      setVolumeFromClientX(e.clientX);
     });
 
-    // --- Control Widget Toggles ---
+    let isDraggingVolume = false;
+
+    volumeThumb.addEventListener('pointerdown', (e) => {
+      isDraggingVolume = true;
+      volumeThumb.setPointerCapture(e.pointerId);
+      e.stopPropagation();
+    });
+
+    volumeThumb.addEventListener('pointermove', (e) => {
+      if (!isDraggingVolume) return;
+      setVolumeFromClientX(e.clientX);
+    });
+
+    volumeThumb.addEventListener('pointerup', (e) => {
+      isDraggingVolume = false;
+      volumeThumb.releasePointerCapture(e.pointerId);
+    });
+
+    // --- Settings panel visibility ---
     const settingsToggle = document.getElementById('toggle-settings');
     const controlCard = document.getElementById('control-card');
-    
+
     settingsToggle.addEventListener('click', () => {
       controlCard.classList.toggle('hidden');
-    });
-
-    const toggleFullscreen = document.getElementById('toggle-fullscreen');
-    toggleFullscreen.addEventListener('click', () => {
-      toggleFullscreen.classList.toggle('active');
-      if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen().catch(() => {});
-      } else {
-        if (document.exitFullscreen) document.exitFullscreen();
-      }
     });
   </script>
 </body>
